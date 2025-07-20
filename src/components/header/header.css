@@ -1,0 +1,45 @@
+/* .header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 16px;
+  padding: 16px 32px;
+  background: #c7ddf3;
+}
+
+.header img {
+  width: auto;
+  margin: 0;
+  float: none;
+  display:inline-block;
+}
+
+.header img.university {
+  height: 56px;
+}
+
+.header img.admin {
+  height: 44px;
+}
+
+.header img.greater-than {
+  height: 38px;
+}
+
+.header img.ss {
+  height: 32px;
+}
+
+.header h1 {
+  height: 66px;
+  width: auto;
+  margin: 0 8px;
+  float: left;
+}
+
+.header h2 {
+  height: 46px;
+  width: auto;
+  margin: 0 8px;
+  float: left;
+} */
