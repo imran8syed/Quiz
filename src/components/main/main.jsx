@@ -110,7 +110,7 @@ function Main() {
           <input
             type="text"
             placeholder="Search"
-            style={{ padding: "5px 5px 5px 32px", width: "100%" }}
+            style={{ padding: "5px 5px 5px 32px", width: "auto" }}
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
           />

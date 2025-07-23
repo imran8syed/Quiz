@@ -9,6 +9,22 @@
   }
 }
 
+/* Laptop view: slightly compressed but more space than tablet */
+@media (max-width: 1200px) and (min-width: 901px) {
+  .main-container {
+    padding: 18px !important;
+  }
+  .main-search-row {
+    flex-direction: row !important;
+    gap: 18px !important;
+  }
+  .main-search-input {
+    width: 350px !important;
+    font-size: 18px !important;
+    padding: 8px 14px !important;
+  }
+}
+
 @media (max-width: 600px) {
   .main-container {
     padding: 4px !important;
@@ -20,6 +36,8 @@
   .main-search-input {
     width: 100% !important;
     font-size: 15px !important;
+    padding: 6px 8px !important;
+    min-width: 0 !important;
   }
   .main-question-list {
     padding: 0 !important;
