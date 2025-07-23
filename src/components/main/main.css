@@ -1,0 +1,32 @@
+/* Responsive styles for Main component */
+@media (max-width: 900px) {
+  .main-container {
+    padding: 10px !important;
+  }
+  .main-search-row {
+    flex-direction: column !important;
+    gap: 12px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .main-container {
+    padding: 4px !important;
+  }
+  .main-search-row {
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+  .main-search-input {
+    width: 100% !important;
+    font-size: 15px !important;
+  }
+  .main-question-list {
+    padding: 0 !important;
+  }
+  .main-question-item {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    font-size: 15px !important;
+  }
+}
