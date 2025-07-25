@@ -37,19 +37,7 @@ function Header({ onToggleSidebar }) {
           <div style={{ flex: 1, display: "flex", justifyContent: "center" }}>
             <img className="university" src={university} alt="icon" />
           </div>
-          {/* Minimize/Expand Button: only show on desktop */}
-          {!isMobile && (
-            <img
-              className="ss"
-              src={greater_than}
-              alt="toggle nav"
-              style={{ cursor: "pointer", transform: minimized ? "rotate(180deg)" : "none" }}
-              onClick={() => {
-                setMinimized((m) => !m);
-                setNavDropdownOpen(false);
-              }}
-            />
-          )}
+          {/* Minimize/Expand Button: hidden on desktop (removed as per request) */}
           {/* Navigation Items: show only if not minimized */}
           {!minimized && (
             <>
