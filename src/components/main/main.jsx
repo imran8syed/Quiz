@@ -67,7 +67,15 @@ const sampleQuestions = [
 {
     question: "what is tha algorithm?",
     answer: "An algorithm is a step-by-step procedure or formula for solving a problem.", 
+},
+{
+  question: "What is the json format?",
+  answer: "JSON (JavaScript Object Notation) is a lightweight data interchange format that is easy for humans to read and write, and easy for machines to parse and generate.",
 }, 
+{
+   question: "explain the concept of recursion in programming?",
+   answer: "Recursion is a programming technique where a function calls itself to solve a problem by breaking it down into smaller subproblems.", 
+},
 ];
 
 function Main() {
@@ -101,32 +109,16 @@ function Main() {
 
   return (
     <div style={{ padding: "20px" }}>
-      {/* Header Controls */}
-      <h2>Test Question</h2>
-
-      {/* search bar */}
-      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "15px", alignItems: "center" }}>
-        <div style={{ position: "relative", width: "85%" }}>
-          <input
-            type="text"
-            placeholder="Search"
-            style={{ padding: "5px 5px 5px 32px", width: "auto" }}
-            value={filter}
-            onChange={(e) => setFilter(e.target.value)}
-          />
-          <img src={search} alt="search" style={{ position: "absolute", left: "8px", top: "50%", transform: "translateY(-50%)", width: "18px", height: "18px", pointerEvents: "none" }} />
-        </div>
-
-        {/* expand it */}
-
+      {/* Header Controls: Test Question, Expand, and View on the same line */}
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "15px" }}>
+        <h2 style={{ margin: 0, cursor: 'pointer' }} onClick={() => setFullView(false)}>Test Question</h2>
         <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-          <button onClick={() => setFullView(!fullView)} style={{ padding: "6px 10px" }}>
+          <button onClick={() => setFullView(!fullView)} style={{ padding: "6px 10px", borderRadius: "10px" }}>
             {fullView ? "Full View" : "Expand "}
           </button>
-
           {/* view button dropdown */}
           <div style={{ position: "relative" }}>
-            <button style={{ padding: "6px 10px" }} onClick={() => setViewDropdownOpen((open) => !open)}>
+            <button style={{ padding: "6px 10px", borderRadius: "10px" }} onClick={() => setViewDropdownOpen((open) => !open)}>
               View
             </button>
             {viewDropdownOpen && (
@@ -135,27 +127,28 @@ function Main() {
                   position: "absolute",
                   top: "40px",
                   right: 0,
-                  minWidth: "160px",
+                  minWidth: "200px",
                   background: "#fff",
                   boxShadow: "0 4px 16px rgba(0,0,0,0.12)",
-                  padding: "12px 20px",
-                  borderRadius: "8px",
+                  padding: "16px 20px",
+                  borderRadius: "10px",
                   zIndex: 10,
                   display: "flex",
                   flexDirection: "column",
-                  gap: "12px",
+                  gap: "14px",
                   alignItems: "flex-start"
                 }}
               >
+                {/* Block of all view options */}
                 {Object.keys(viewOptions).map((key) => (
-                  <label key={key} style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "15px" }}>
+                  <div key={key} style={{ display: "flex", alignItems: "center", gap: "10px", background: "#f1f5fa", borderRadius: "8px", padding: "8px 14px", width: "100%" }}>
                     <input
                       type="checkbox"
                       checked={viewOptions[key]}
                       onChange={() => toggleOption(key)}
                     />
-                    {key}
-                  </label>
+                    <span style={{ fontSize: "15px", fontWeight: 500 }}>{key}</span>
+                  </div>
                 ))}
                 <button
                   style={{
@@ -164,7 +157,7 @@ function Main() {
                     background: "#2563eb",
                     color: "#fff",
                     border: "none",
-                    borderRadius: "6px",
+                    borderRadius: "8px",
                     fontWeight: "bold",
                     cursor: "pointer",
                     alignSelf: "flex-end"
@@ -178,71 +171,86 @@ function Main() {
           </div>
         </div>
       </div>
+      {/* search bar */}
+      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "15px", alignItems: "center" }}>
+        <div style={{ position: "relative", width: "85%" }}>
+          <input
+            type="text"
+            placeholder="Search"
+            style={{ padding: "5px 5px 5px 32px", width: "110%" }}
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+          />
+          <img src={search} alt="search" style={{ position: "absolute", left: "8px", top: "50%", transform: "translateY(-50%)", width: "18px", height: "18px", pointerEvents: "none" }} />
+        </div>
+      </div>
 
       {/* Question List or Table */}
       {activeColumns.length > 1 ? (
-        <table style={{ width: "100%", borderCollapse: "collapse", marginTop: "20px" }}>
-          <thead>
-            <tr>
-              <th style={{ padding: "8px", borderBottom: "2px solid #2563eb" }}></th>
-              {activeColumns.map((col) => (
-                <th key={col} style={{ padding: "8px", borderBottom: "2px solid #2563eb", textAlign: "left" }}>{col}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {filteredQuestions.slice(0, visibleCount).map((q, index) => {
-              let type = "Theory";
-              const questionText = q.question.toLowerCase();
-              if (questionText.includes("mcq")) type = "MCQ";
-              else if (questionText.match(/\b\d+\s*[+\-*/]\s*\d+/) || questionText.includes("calculate") || questionText.includes("solve") || questionText.includes("square root")) type = "Numerical";
+        <div style={{ width: '100%', overflowX: 'auto' }}>
+          <table style={{ minWidth: '700px', width: '100%', borderCollapse: 'collapse', marginTop: '20px' }}>
+            <thead>
+              <tr>
+                <th style={{ padding: "8px", borderBottom: "2px solid #2563eb" }}></th>
+                {activeColumns.map((col) => (
+                  <th key={col} style={{ padding: "8px", borderBottom: "2px solid #2563eb", textAlign: "left" }}>{col}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {filteredQuestions.slice(0, visibleCount).map((q, index) => {
+                let type = "Theory";
+                const questionText = q.question.toLowerCase();
+                if (questionText.includes("mcq")) type = "MCQ";
+                else if (questionText.match(/\b\d+\s*[+\-*/]\s*\d+/) || questionText.includes("calculate") || questionText.includes("solve") || questionText.includes("square root")) type = "Numerical";
 
-              // Make all cells clickable to expand/collapse
-              const handleRowClick = () => setExpandedIndex(expandedIndex === index ? null : index);
+                // Make all cells clickable to expand/collapse
+                const handleRowClick = () => setExpandedIndex(expandedIndex === index ? null : index);
 
-              return (
-                <React.Fragment key={index}>
-                  <tr style={{ background: index % 2 === 0 ? "#f9f9f9" : "#fff" }} onClick={handleRowClick}>
-                    <td style={{ padding: "8px" }}>
-                      <input
-                        type="checkbox"
-                        checked={selectedQuestions.includes(index)}
-                        onClick={e => {
-                          e.stopPropagation();
-                          setSelectedQuestions(selectedQuestions.includes(index)
-                            ? selectedQuestions.filter(i => i !== index)
-                            : [...selectedQuestions, index]);
-                        }}
-                      />
-                    </td>
-                    {activeColumns.map((col) => (
-                      <td key={col} style={{ padding: "8px", cursor: "pointer" }}>
-                        {col === "Questions" && <strong>{q.question}</strong>}
-                        {col === "Owner" && <span>Admin</span>}
-                        {col === "Type" && <span>{type}</span>}
-                        {col === "Marks" && <span>{type === "Theory" ? 2 : type === "Numerical" ? 1 : "-"}</span>}
-                        {col === "Actions" && (
-                          <span style={{ fontSize: "18px", display: "flex", gap: "10px" }}>
-                            <span title="Delete" style={{ cursor: "pointer" }}>🗑️</span>
-                            <span title="Copy" style={{ cursor: "pointer" }}>📋</span>
-                            <span title="Rewrite" style={{ cursor: "pointer" }}>✏️</span>
-                          </span>
-                        )}
+                return (
+                  <React.Fragment key={index}>
+                    <tr style={{ background: index % 2 === 0 ? "#f9f9f9" : "#fff" }} onClick={handleRowClick}>
+                      <td style={{ padding: "8px" }}>
+                        <input
+                          type="checkbox"
+                          checked={selectedQuestions.includes(index)}
+                          onClick={e => {
+                            e.stopPropagation();
+                            setSelectedQuestions(selectedQuestions.includes(index)
+                              ? selectedQuestions.filter(i => i !== index)
+                              : [...selectedQuestions, index]);
+                          }}
+                        />
                       </td>
-                    ))}
-                  </tr>
-                  {(fullView || expandedIndex === index) && (
-                    <tr>
-                      <td colSpan={activeColumns.length + 1} style={{ background: "#eef2ff", padding: "10px 16px", color: "#444" }}>
-                        {q.answer}
-                      </td>
+                      {activeColumns.map((col) => (
+                        <td key={col} style={{ padding: "8px", cursor: "pointer" }}>
+                          {col === "Questions" && <strong style={{ color: "#2563eb" }}>{q.question}</strong>}
+                          {col === "Owner" && <span>Admin</span>}
+                          {col === "Type" && <span>{type}</span>}
+                          {col === "Marks" && <span>{type === "Theory" ? 2 : type === "Numerical" ? 1 : "-"}</span>}
+                          {col === "Actions" && (
+                            <span style={{ fontSize: "18px", display: "flex", gap: "10px" }}>
+                              <span title="Delete" style={{ cursor: "pointer" }}>🗑️</span>
+                              <span title="Copy" style={{ cursor: "pointer" }}>📋</span>
+                              <span title="Rewrite" style={{ cursor: "pointer" }}>✏️</span>
+                            </span>
+                          )}
+                        </td>
+                      ))}
                     </tr>
-                  )}
-                </React.Fragment>
-              );
-            })}
-          </tbody>
-        </table>
+                    {(fullView || expandedIndex === index) && (
+                      <tr>
+                        <td colSpan={activeColumns.length + 1} style={{ background: "#eef2ff", padding: "10px 16px", color: "#444" }}>
+                          {q.answer}
+                        </td>
+                      </tr>
+                    )}
+                  </React.Fragment>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       ) : (
         <ul style={{ listStyleType: "none", padding: 0 }}>
           {filteredQuestions.slice(0, visibleCount).map((q, index) => (
@@ -271,7 +279,7 @@ function Main() {
                 style={{ marginRight: "12px" }}
               />
               <div style={{ flex: 1 }}>
-                <strong>{q.question}</strong>
+                <strong style={{ color: "#2563eb" }}>{q.question}</strong>
                 {(fullView || expandedIndex === index) && (
                   <p style={{ marginTop: "5px" }}>{q.answer}</p>
                 )}
@@ -280,41 +288,48 @@ function Main() {
           ))}
         </ul>
       )}
-      {visibleCount < filteredQuestions.length && (
-        <button
-          style={{
-            marginTop: "16px",
-            padding: "8px 24px",
-            background: "#2563eb",
-            color: "#fff",
-            border: "none",
-            borderRadius: "6px",
-            fontWeight: "bold",
-            cursor: "pointer",
-            marginRight: "10px"
-          }}
-          onClick={handleLoadMore}
-        >
-          Load More
-        </button>
-      )}
-      {visibleCount > 10 && (
-        <button
-          style={{
-            marginTop: "16px",
-            padding: "8px 24px",
-            background: "#e53e3e",
-            color: "#fff",
-            border: "none",
-            borderRadius: "6px",
-            fontWeight: "bold",
-            cursor: "pointer"
-          }}
-          onClick={() => setVisibleCount(10)}
-        >
-          Show Less
-        </button>
-      )}
+      {/* Centered Load More and Show Less buttons */}
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
+          {visibleCount < filteredQuestions.length && (
+            <button
+              style={{
+                marginTop: "16px",
+                padding: "8px 24px",
+                background: "#2563eb",
+                color: "#fff",
+                border: "none",
+                borderRadius: "6px",
+                fontWeight: "bold",
+                cursor: "pointer"
+              }}
+              onClick={handleLoadMore}
+            >
+              Load More
+            </button>
+          )}
+          {visibleCount > 10 && (
+            <button
+              style={{
+                marginTop: "16px",
+                padding: "8px 24px",
+                background: "#e53e3e",
+                color: "#fff",
+                border: "none",
+                borderRadius: "6px",
+                fontWeight: "bold",
+                cursor: "pointer"
+              }}
+              onClick={() => setVisibleCount(10)}
+            >
+              Show Less
+            </button>
+          )}
+        </div>
+        <div style={{ marginTop: '8px', color: '#444', fontWeight: 'bold' }}>
+          Showing {Math.min(visibleCount, filteredQuestions.length)} out of {filteredQuestions.length}
+        </div>
+      </div>
     </div>
   );
 }
